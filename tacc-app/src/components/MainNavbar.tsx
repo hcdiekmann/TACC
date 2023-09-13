@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   createStyles,
   Navbar,
@@ -9,22 +9,19 @@ import {
   rem,
 } from '@mantine/core';
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconKey,
+  IconHome,
+  IconUser,
   IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
-  IconSwitchHorizontal,
   IconLogout,
 } from '@tabler/icons-react';
+import { ColorSchemeBtn } from './ColorSchemeBtn';
+import { DataContext } from '../context/DataProvider';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
     backgroundColor: theme.fn.variant({
       variant: 'filled',
-      color: theme.primaryColor,
+      color: theme.primaryColor[10],
     }).background,
   },
 
@@ -100,18 +97,15 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  { link: '', label: 'Notifications', icon: IconBellRinging },
-  { link: '', label: 'Billing', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+  { link: '', page: 'home', label: 'Home', icon: IconHome },
+  { link: '', page: 'account', label: 'Account', icon: IconUser },
+  { link: '', page: 'settings', label: 'Settings', icon: IconSettings },
 ];
 
 export const MainNavbar = (): JSX.Element => {
   const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState('Home');
+  const { setPage } = useContext(DataContext);
 
   const links = data.map((item) => (
     <a
@@ -123,6 +117,7 @@ export const MainNavbar = (): JSX.Element => {
       onClick={(event) => {
         event.preventDefault();
         setActive(item.label);
+        setPage(item.page);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
@@ -134,29 +129,22 @@ export const MainNavbar = (): JSX.Element => {
     <Navbar height={700} width={{ sm: 300 }} p='md' className={classes.navbar}>
       <Navbar.Section grow>
         <Group className={classes.header} position='apart'>
-          <Code className={classes.version}>v3.1.2</Code>
+          <Code className={classes.version}>v1.0.0</Code>
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a
-          href='#'
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
-        <a
-          href='#'
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
+        <Group position='apart'>
+          <a
+            className={classes.link}
+            onClick={(event) => event.preventDefault()}
+          >
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Logout</span>
+          </a>
+          <ColorSchemeBtn />
+        </Group>
       </Navbar.Section>
     </Navbar>
   );
