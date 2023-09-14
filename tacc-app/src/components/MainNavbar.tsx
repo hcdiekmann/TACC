@@ -24,16 +24,6 @@ const useStyles = createStyles((theme) => ({
     }).background,
   },
 
-  version: {
-    backgroundColor: theme.fn.lighten(
-      theme.fn.variant({ variant: 'filled', color: theme.primaryColor })
-        .background!,
-      0.1
-    ),
-    color: theme.white,
-    fontWeight: 700,
-  },
-
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
@@ -142,7 +132,6 @@ export const MainNavbar = (): JSX.Element => {
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </a>
-          <ColorSchemeBtn />
         </Group>
       </Navbar.Section>
     </Navbar>
