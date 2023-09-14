@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { DataContext } from './context/DataProvider';
 import { DataProvider } from './context/DataProvider';
 import { MainAppShell } from './components/MainAppShell';

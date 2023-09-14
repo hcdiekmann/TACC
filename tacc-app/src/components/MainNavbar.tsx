@@ -4,7 +4,6 @@ import {
   Navbar,
   Group,
   Image,
-  Code,
   getStylesRef,
   rem,
 } from '@mantine/core';
