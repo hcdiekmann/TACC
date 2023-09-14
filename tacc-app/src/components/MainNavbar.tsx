@@ -126,10 +126,10 @@ export const MainNavbar = (): JSX.Element => {
   ));
 
   return (
-    <Navbar height={700} width={{ sm: 300 }} p='md' className={classes.navbar}>
+    <Navbar width={{ sm: 250 }} p='md' className={classes.navbar}>
       <Navbar.Section grow>
-        <Group className={classes.header} position='apart'>
-          <Code className={classes.version}>v1.0.0</Code>
+        <Group className={classes.header}>
+          <Image src='../pictures/logo.png' alt='Logo' />
         </Group>
         {links}
       </Navbar.Section>

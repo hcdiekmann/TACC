@@ -1,4 +1,4 @@
-import { AppShell, useMantineTheme } from '@mantine/core';
+import { AppShell, Footer, Header, useMantineTheme } from '@mantine/core';
 import { MainNavbar } from './MainNavbar';
 
 interface Props {
@@ -8,7 +8,12 @@ interface Props {
 export const MainAppShell = (props: Props) => {
   const theme = useMantineTheme();
   return (
-    <AppShell navbarOffsetBreakpoint='sm' navbar={<MainNavbar />}>
+    <AppShell
+      navbarOffsetBreakpoint='sm'
+      // header={<Header height={0}>{/* Header content */}</Header>}
+      navbar={<MainNavbar />}
+      // footer={<Footer height={0}>{/* Footer content */}</Footer>}
+    >
       {props.children}
     </AppShell>
   );
