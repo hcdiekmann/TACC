@@ -5,6 +5,8 @@ import { MainAppShell } from './components/MainAppShell';
 import { HomePage } from './pages/HomePage';
 import { AccountPage } from './pages/AccountPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { MusicPage } from './pages/MusicPage';
+import { NavigationPage } from './pages/NavigationPage';
 
 export const MainAppProvider = (): JSX.Element => {
   return (
@@ -25,6 +27,10 @@ const PageProvider = (): JSX.Element => {
         return <AccountPage />;
       case 'settings':
         return <SettingsPage />;
+      case 'music':
+        return <MusicPage />;
+      case 'nav':
+        return <NavigationPage />;
       default:
         return <HomePage />;
     }

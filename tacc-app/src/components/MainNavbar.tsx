@@ -12,6 +12,8 @@ import {
   IconUser,
   IconSettings,
   IconLogout,
+  IconMusic,
+  IconMapPin,
 } from '@tabler/icons-react';
 import { DataContext } from '../context/DataProvider';
 
@@ -86,6 +88,8 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
   { link: '', page: 'home', label: 'Home', icon: IconHome },
+  { link: '', page: 'music', label: 'Music', icon: IconMusic },
+  { link: '', page: 'nav', label: 'Navigation', icon: IconMapPin },
   { link: '', page: 'account', label: 'Account', icon: IconUser },
   { link: '', page: 'settings', label: 'Settings', icon: IconSettings },
 ];
