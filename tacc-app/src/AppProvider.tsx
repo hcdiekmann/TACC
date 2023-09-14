@@ -8,7 +8,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { MusicPage } from './pages/MusicPage';
 import { NavigationPage } from './pages/NavigationPage';
 
-export const MainAppProvider = (): JSX.Element => {
+export const AppProvider = (): JSX.Element => {
   return (
     <DataProvider>
       <PageProvider />
@@ -19,7 +19,7 @@ export const MainAppProvider = (): JSX.Element => {
 const PageProvider = (): JSX.Element => {
   const { page } = useContext(DataContext);
 
-  function render() {
+  function renderMainPage() {
     switch (page) {
       case 'home':
         return <HomePage />;
@@ -36,5 +36,11 @@ const PageProvider = (): JSX.Element => {
     }
   }
 
-  return <MainAppShell>{render()}</MainAppShell>;
+  function renderSidebar() {
+    return <p>Information</p>;
+  }
+
+  return (
+    <MainAppShell sidebar={renderSidebar()}>{renderMainPage()}</MainAppShell>
+  );
 };

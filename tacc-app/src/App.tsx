@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocalStorage, useHotkeys } from '@mantine/hooks';
-import { MainAppProvider } from './MainAppProvider';
+import { AppProvider } from './AppProvider';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -62,7 +62,7 @@ export const App = (): JSX.Element => {
         <Router>
           <ScrollToTop />
           <Routes>
-            <Route path='/' element={<MainAppProvider />} />
+            <Route path='/' element={<AppProvider />} />
           </Routes>
         </Router>
       </MantineProvider>

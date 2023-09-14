@@ -1,8 +1,9 @@
-import { AppShell, Aside, MediaQuery, Text } from '@mantine/core';
+import { AppShell, Aside, MediaQuery } from '@mantine/core';
 import { MainNavbar } from './MainNavbar';
 
 interface Props {
   children: JSX.Element;
+  sidebar: JSX.Element;
 }
 
 export const MainAppShell = (props: Props) => {
@@ -15,7 +16,7 @@ export const MainAppShell = (props: Props) => {
       aside={
         <MediaQuery smallerThan='sm' styles={{ display: 'none' }}>
           <Aside p='md' hiddenBreakpoint='sm' width={{ sm: 200, lg: 300 }}>
-            <Text>Application sidebar</Text>
+            {props.sidebar}
           </Aside>
         </MediaQuery>
       }
