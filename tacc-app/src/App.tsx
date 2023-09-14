@@ -39,19 +39,19 @@ export const App = (): JSX.Element => {
       <MantineProvider
         theme={{
           colorScheme: colorScheme,
-          primaryColor: 'ToyotaBlue',
+          primaryColor: 'RoyalBlue',
           colors: {
-            ToyotaBlue: [
-              '#eef5fc',
-              '#dae6f3',
-              '#b1cbe8',
-              '#85afdf',
-              '#6297d8',
-              '#4c89d3',
-              '#4082d2',
-              '#336fbb',
-              '#2963a7',
-              '#195594',
+            RoyalBlue: [
+              '#eff3fb',
+              '#dce4f0',
+              '#b5c7e3',
+              '#8ba8d7',
+              '#688dcc',
+              '#537dc6',
+              '#4774c4',
+              '#3963ae',
+              '#30589c',
+              '#234c8a',
             ],
           },
         }}
