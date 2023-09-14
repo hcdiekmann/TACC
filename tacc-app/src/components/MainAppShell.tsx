@@ -1,10 +1,4 @@
-import {
-  AppShell,
-  Aside,
-  MediaQuery,
-  useMantineTheme,
-  Text,
-} from '@mantine/core';
+import { AppShell, Aside, MediaQuery, Text } from '@mantine/core';
 import { MainNavbar } from './MainNavbar';
 
 interface Props {

@@ -13,7 +13,6 @@ import {
   IconSettings,
   IconLogout,
 } from '@tabler/icons-react';
-import { ColorSchemeBtn } from './ColorSchemeBtn';
 import { DataContext } from '../context/DataProvider';
 
 const useStyles = createStyles((theme) => ({
@@ -126,6 +125,7 @@ export const MainNavbar = (): JSX.Element => {
       <Navbar.Section className={classes.footer}>
         <Group position='apart'>
           <a
+            href={'/'}
             className={classes.link}
             onClick={(event) => event.preventDefault()}
           >
