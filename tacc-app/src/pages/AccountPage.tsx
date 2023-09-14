@@ -1,5 +1,9 @@
-import { Title } from '@mantine/core';
+import { Container, Title } from '@mantine/core';
 
 export const AccountPage = (): JSX.Element => {
-  return <Title order={1}>Account</Title>;
+  return (
+    <Container p={10}>
+      <Title order={1}>Account</Title>
+    </Container>
+  );
 };
