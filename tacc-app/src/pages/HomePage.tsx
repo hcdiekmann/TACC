@@ -1,5 +1,6 @@
-import { Container, Title } from '@mantine/core';
-import React from 'react';
+import { Container, Title, SimpleGrid } from '@mantine/core';
+import { WeatherWidget } from '../components/WeatherWidget';
+import SpotifyPlayer from '../components/SpotifyPlayer';
 
 export const HomePage = (): JSX.Element => {
   const greeting = getGreeting();
@@ -8,6 +9,10 @@ export const HomePage = (): JSX.Element => {
   return (
     <Container p={10}>
       <Title order={1}>{`${greeting}, ${userName}!`}</Title>
+      <SimpleGrid p={10} cols={2}>
+        <SpotifyPlayer />
+        <WeatherWidget />
+      </SimpleGrid>
     </Container>
   );
 };

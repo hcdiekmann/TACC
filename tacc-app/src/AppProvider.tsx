@@ -12,7 +12,7 @@ import { getToken, refreshToken } from './auth/TokenManager';
 
 export const AppProvider = (): JSX.Element => {
   const [token, setToken] = useState<string | null>(null);
-  const [refreshTokenValue, setRefreshToken] = useState<string | null>(null);
+  const [refreshTokenValue] = useState<string | null>(null);
   const refreshInterval = 3500 * 1000; // Refresh every 3500 seconds (a little less than 1 hour to be safe)
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const AppProvider = (): JSX.Element => {
     }
 
     initializeToken();
-  }, [refreshTokenValue]);
+  }, [refreshTokenValue, refreshInterval]);
 
   return (
     <>

@@ -112,16 +112,19 @@ function SpotifyPlayer() {
     return (
       <Stack align='center'>
         <IconPlugConnectedX size={80} color='red' />
-        <Text fw={600}>Spotify Player not available, ensure you are logged in or try again later</Text>
+        <Text fw={600}>
+          Spotify Player not available, ensure you are logged in or try again
+          later
+        </Text>
         <Button
-            component='a'
-            href='http://localhost:5000/auth/login'
-            leftIcon={<IconBrandSpotify size={rem(32)} />}
-            variant='gradient'
-            gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
-          >
-            Login
-          </Button>
+          component='a'
+          href='http://localhost:5000/auth/login'
+          leftIcon={<IconBrandSpotify size={rem(32)} />}
+          variant='gradient'
+          gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
+        >
+          Login
+        </Button>
       </Stack>
     );
   }
@@ -135,57 +138,59 @@ function SpotifyPlayer() {
     );
   } else {
     return (
-      <Stack align='center' spacing='sm'>
-        <Card p='lg' className={classes.card} radius='lg'>
-          <div
-            className={classes.image}
-            style={{
-              backgroundImage: `url(${current_track.album.images[0].url})`,
-            }}
-          />
-          <div className={classes.overlay} />
+      <Card radius='md'>
+        <Stack align='center' spacing='sm'>
+          <Card p='lg' className={classes.card} radius='md'>
+            <div
+              className={classes.image}
+              style={{
+                backgroundImage: `url(${current_track.album.images[0].url})`,
+              }}
+            />
+            <div className={classes.overlay} />
 
-          <div className={classes.content}>
-            <div>
-              <Text size='lg' className={classes.title} weight={500}>
-                {current_track.name}
-              </Text>
-              <Text size='sm' className={classes.author}>
-                {current_track.artists[0].name}
-              </Text>
+            <div className={classes.content}>
+              <div>
+                <Text size='lg' className={classes.title} weight={500}>
+                  {current_track.name}
+                </Text>
+                <Text size='sm' className={classes.author}>
+                  {current_track.artists[0].name}
+                </Text>
+              </div>
             </div>
-          </div>
-        </Card>
-        <Group>
-          <IconPlayerTrackPrevFilled
-            size={60}
-            onClick={() => {
-              player.previousTrack();
-            }}
-          />
-          {isPaused ? (
-            <IconPlayerPlay
-              size={80}
+          </Card>
+          <Group>
+            <IconPlayerTrackPrevFilled
+              size={60}
               onClick={() => {
-                player.togglePlay();
+                player.previousTrack();
               }}
             />
-          ) : (
-            <IconPlayerPause
-              size={80}
+            {isPaused ? (
+              <IconPlayerPlay
+                size={80}
+                onClick={() => {
+                  player.togglePlay();
+                }}
+              />
+            ) : (
+              <IconPlayerPause
+                size={80}
+                onClick={() => {
+                  player.togglePlay();
+                }}
+              />
+            )}
+            <IconPlayerTrackNextFilled
+              size={60}
               onClick={() => {
-                player.togglePlay();
+                player.nextTrack();
               }}
             />
-          )}
-          <IconPlayerTrackNextFilled
-            size={60}
-            onClick={() => {
-              player.nextTrack();
-            }}
-          />
-        </Group>
-      </Stack>
+          </Group>
+        </Stack>
+      </Card>
     );
   }
 }
