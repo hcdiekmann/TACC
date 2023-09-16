@@ -50,9 +50,10 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.md,
     color: theme.white,
-    padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+    marginBottom: theme.spacing.sm,
+    padding: `${theme.spacing.sm} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
 

@@ -5,17 +5,18 @@ import {
   Text,
   Card,
   Group,
-  Center,
   createStyles,
   getStylesRef,
   rem,
-  Container,
+  Button,
 } from '@mantine/core';
 import {
   IconPlayerTrackPrevFilled,
   IconPlayerTrackNextFilled,
   IconPlayerPlay,
   IconPlayerPause,
+  IconBrandSpotify,
+  IconPlugConnectedX,
 } from '@tabler/icons-react';
 import { useSpotifyPlayer } from '../context/SpotifyPlayerProvider';
 
@@ -83,8 +84,9 @@ const track = {
 };
 
 function SpotifyPlayer() {
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
   const { player, playerState } = useSpotifyPlayer();
+  const [isOffline, setOffline] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isPaused, setPaused] = useState(false);
   const [current_track, setTrack] = useState(track);
@@ -92,8 +94,10 @@ function SpotifyPlayer() {
   useEffect(() => {
     if (!player) {
       console.log('Player is not initialized.');
+      setOffline(true);
       return;
     }
+    setOffline(false);
     if (!playerState) {
       console.log('Player State is not available.');
       setLoading(true);
@@ -103,6 +107,24 @@ function SpotifyPlayer() {
     setTrack(playerState.track_window.current_track);
     setPaused(playerState.paused);
   }, [player, playerState]);
+
+  if (isOffline) {
+    return (
+      <Stack align='center'>
+        <IconPlugConnectedX size={80} color='red' />
+        <Text fw={600}>Spotify Player not available, ensure you are logged in or try again later</Text>
+        <Button
+            component='a'
+            href='http://localhost:5000/auth/login'
+            leftIcon={<IconBrandSpotify size={rem(32)} />}
+            variant='gradient'
+            gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
+          >
+            Login
+          </Button>
+      </Stack>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -114,7 +136,7 @@ function SpotifyPlayer() {
   } else {
     return (
       <Stack align='center' spacing='sm'>
-        <Card p='lg' className={classes.card} shadow='lg' radius='lg'>
+        <Card p='lg' className={classes.card} radius='lg'>
           <div
             className={classes.image}
             style={{
