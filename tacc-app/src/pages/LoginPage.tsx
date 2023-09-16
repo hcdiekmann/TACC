@@ -1,7 +1,7 @@
 import { Button, Container, Group, Paper, Title, rem } from '@mantine/core';
 import { IconBrandSpotify } from '@tabler/icons-react';
 
-const LoginPage = () => {
+export const LoginPage = () => {
   return (
     <Container size={420} my={40}>
       <Title
@@ -11,7 +11,7 @@ const LoginPage = () => {
           fontWeight: 900,
         })}
       >
-        Welcome back!
+        Welcome to TACC!
       </Title>
       <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
         <Group grow mb='md' mt='md'>
@@ -29,5 +29,3 @@ const LoginPage = () => {
     </Container>
   );
 };
-
-export default LoginPage;

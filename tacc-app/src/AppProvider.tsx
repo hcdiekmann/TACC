@@ -7,32 +7,41 @@ import { MusicPage } from './pages/MusicPage';
 import { NavigationPage } from './pages/NavigationPage';
 import { SpotifyPlayerProvider } from './context/SpotifyPlayerProvider';
 import { useState, useEffect, useContext } from 'react';
-import LoginPage from './pages/LoginPage';
+import { LoginPage } from './pages/LoginPage';
+import { getToken, refreshToken } from './auth/TokenManager';
 
 export const AppProvider = (): JSX.Element => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState<string | null>(null);
+  const [refreshTokenValue, setRefreshToken] = useState<string | null>(null);
+  const refreshInterval = 3500 * 1000; // Refresh every 3500 seconds (a little less than 1 hour to be safe)
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem('spotifyToken');
-
-    if (storedToken) {
-      setToken(storedToken);
-      return;
+    async function initializeToken() {
+      const fetchedToken = await getToken();
+      if (fetchedToken) {
+        setToken(fetchedToken);
+        setTimeout(async () => {
+          if (refreshTokenValue !== null) {
+            const newToken = await refreshToken(refreshTokenValue);
+            if (newToken) {
+              setToken(newToken);
+            }
+          } else {
+            console.warn(
+              'Refresh token is null. Could not refresh access token.'
+            );
+            // Handle this case accordingly, maybe navigate user back to login?
+          }
+        }, refreshInterval);
+      }
     }
 
-    async function getToken() {
-      const response = await fetch('http://localhost:5000/auth/token');
-      const json = await response.json();
-      sessionStorage.setItem('spotifyToken', json.access_token);
-      setToken(json.access_token);
-    }
-
-    getToken();
-  }, []);
+    initializeToken();
+  }, [refreshTokenValue]);
 
   return (
     <>
-      {token === '' ? (
+      {!token ? (
         <LoginPage />
       ) : (
         <SpotifyPlayerProvider token={token}>
