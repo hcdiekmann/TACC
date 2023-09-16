@@ -13,7 +13,7 @@ import {
 import {
   IconPlayerTrackPrevFilled,
   IconPlayerTrackNextFilled,
-  IconPlayerPlay,
+  IconPlayerPlayFilled,
   IconPlayerPause,
   IconBrandSpotify,
   IconPlugConnectedX,
@@ -22,8 +22,8 @@ import { useSpotifyPlayer } from '../context/SpotifyPlayerProvider';
 
 const useStyles = createStyles((theme) => ({
   card: {
-    height: rem(380),
-    width: rem(380),
+    height: rem(320),
+    width: rem(320),
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[6]
@@ -162,28 +162,28 @@ function SpotifyPlayer() {
           </Card>
           <Group>
             <IconPlayerTrackPrevFilled
-              size={60}
+              size={68}
               onClick={() => {
                 player.previousTrack();
               }}
             />
             {isPaused ? (
-              <IconPlayerPlay
-                size={80}
+              <IconPlayerPlayFilled
+                size={82}
                 onClick={() => {
                   player.togglePlay();
                 }}
               />
             ) : (
               <IconPlayerPause
-                size={80}
+                size={82}
                 onClick={() => {
                   player.togglePlay();
                 }}
               />
             )}
             <IconPlayerTrackNextFilled
-              size={60}
+              size={68}
               onClick={() => {
                 player.nextTrack();
               }}

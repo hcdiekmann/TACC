@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getWeather } from '../api/WeatherService';
-import { APIResponse } from '../types/WeatherAPIResponse';
-import { Card, Center, Loader, Stack, Text } from '@mantine/core';
+import { APIResponse, WeatherDetails } from '../types/WeatherAPIResponse';
+import { Card, Center, Flex, Loader, Stack, Text } from '@mantine/core';
 import {
+  IconSunrise,
+  IconSunset,
   IconSunFilled,
   IconSunWind,
   IconCloud,
@@ -10,7 +12,30 @@ import {
   IconCloudSnow,
   IconCloudStorm,
   IconCloudOff,
+  IconMapPin,
 } from '@tabler/icons-react';
+
+const getWeatherIcon = (weatherDetails: WeatherDetails): React.ReactElement => {
+  switch (weatherDetails.main) {
+    case 'Clear':
+      return <IconSunFilled size={68} />;
+    case 'Clouds':
+      return <IconCloud size={68} />;
+    case 'Rain':
+      return <IconCloudRain size={68} />;
+    case 'Snow':
+      return <IconCloudSnow size={68} />;
+    case 'Thunderstorm':
+      return <IconCloudStorm size={68} />;
+    default:
+      return <IconSunWind size={68} />;
+  }
+};
+
+const convertUnixToTime = (unixTimestamp: number, timezone: number): string => {
+  const date = new Date((unixTimestamp + timezone) * 1000);
+  return date.toISOString().substr(11, 5);
+};
 
 export const WeatherWidget = (): JSX.Element => {
   const [weather, setWeather] = useState<APIResponse | null>(null);
@@ -66,12 +91,46 @@ export const WeatherWidget = (): JSX.Element => {
       ) : error ? (
         <Center>
           <Stack align='center'>
-            <IconCloudOff size={42} />
-            <Text>Weather currently unavailable</Text>
+            <IconCloudOff size={68} />
+            <Text>Weather currently not available</Text>
           </Stack>
         </Center>
       ) : (
-        <div>{`${weather?.name} ${weather?.main.temp} °C`}</div>
+        <Center>
+          <Stack align='center' spacing='md'>
+            <Flex gap='xs'>
+              <IconMapPin size={20} />
+              <Text fw={500}>{weather?.name}</Text>
+            </Flex>
+            <Flex gap='md'>
+              {weather?.weather[0] && getWeatherIcon(weather.weather[0])}
+              <Flex direction='column' gap='xs'>
+                <Text fw={600} size={40}>{`${weather?.main.temp.toFixed(
+                  1
+                )} °C`}</Text>
+              </Flex>
+            </Flex>
+            <Flex gap='xs'>
+              <IconSunrise size={22} />
+              <Text>
+                {convertUnixToTime(
+                  weather?.sys.sunrise || 0,
+                  weather?.timezone || 0
+                )}
+              </Text>
+            </Flex>
+            <Flex gap='xs'>
+              <IconSunset size={22} />
+
+              <Text>
+                {convertUnixToTime(
+                  weather?.sys.sunset || 0,
+                  weather?.timezone || 0
+                )}
+              </Text>
+            </Flex>
+          </Stack>
+        </Center>
       )}
     </Card>
   );

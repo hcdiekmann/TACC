@@ -16,6 +16,7 @@ export const getWeather = async (
         appid: process.env.REACT_APP_OPEN_WEATHER_API_KEY,
       },
     });
+    console.log('Weather data:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching weather data:', error);

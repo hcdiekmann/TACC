@@ -13,9 +13,10 @@ import {
   IconSettings,
   IconLogout,
   IconMusic,
-  IconMapPin,
+  IconMap2,
 } from '@tabler/icons-react';
 import { DataContext } from '../context/DataProvider';
+import { ColorSchemeBtn } from './ColorSchemeBtn';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -90,7 +91,7 @@ const useStyles = createStyles((theme) => ({
 const data = [
   { link: '', page: 'home', label: 'Home', icon: IconHome },
   { link: '', page: 'music', label: 'Music', icon: IconMusic },
-  { link: '', page: 'nav', label: 'Navigation', icon: IconMapPin },
+  { link: '', page: 'nav', label: 'Navigation', icon: IconMap2 },
   { link: '', page: 'account', label: 'Account', icon: IconUser },
   { link: '', page: 'settings', label: 'Settings', icon: IconSettings },
 ];
@@ -128,16 +129,15 @@ export const MainNavbar = (): JSX.Element => {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Group position='apart'>
-          <a
-            href={'/'}
-            className={classes.link}
-            onClick={(event) => event.preventDefault()}
-          >
-            <IconLogout className={classes.linkIcon} stroke={1.5} />
-            <span>Logout</span>
-          </a>
-        </Group>
+        <a
+          href={'/'}
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+        >
+          <IconLogout className={classes.linkIcon} stroke={1.5} />
+          <span>Logout</span>
+        </a>
+        <ColorSchemeBtn />
       </Navbar.Section>
     </Navbar>
   );
