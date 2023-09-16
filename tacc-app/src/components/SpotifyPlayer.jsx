@@ -1,6 +1,78 @@
 import { useState, useEffect } from 'react';
-import { Stack, Loader, Text } from '@mantine/core';
+import {
+  Stack,
+  Loader,
+  Text,
+  Card,
+  Group,
+  Center,
+  createStyles,
+  getStylesRef,
+  rem,
+  Container,
+} from '@mantine/core';
+import {
+  IconPlayerTrackPrevFilled,
+  IconPlayerTrackNextFilled,
+  IconPlayerPlay,
+  IconPlayerPause,
+} from '@tabler/icons-react';
 import { useSpotifyPlayer } from '../context/SpotifyPlayerProvider';
+
+const useStyles = createStyles((theme) => ({
+  card: {
+    height: rem(380),
+    width: rem(380),
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+
+    [`&:hover .${getStylesRef('image')}`]: {
+      transform: 'scale(1.03)',
+    },
+  },
+
+  image: {
+    ...theme.fn.cover(),
+    ref: getStylesRef('image'),
+    backgroundSize: 'cover',
+    transition: 'transform 500ms ease',
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage:
+      'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .85) 90%)',
+  },
+
+  content: {
+    height: '100%',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    zIndex: 1,
+  },
+
+  title: {
+    color: theme.white,
+    marginBottom: rem(5),
+  },
+
+  bodyText: {
+    color: theme.colors.dark[2],
+    marginLeft: rem(7),
+  },
+
+  author: {
+    color: theme.colors.dark[2],
+  },
+}));
 
 const track = {
   name: '',
@@ -11,6 +83,7 @@ const track = {
 };
 
 function SpotifyPlayer() {
+  const { classes, theme } = useStyles();
   const { player, playerState } = useSpotifyPlayer();
   const [isLoading, setLoading] = useState(true);
   const [isPaused, setPaused] = useState(false);
@@ -40,51 +113,57 @@ function SpotifyPlayer() {
     );
   } else {
     return (
-      <>
-        <div className='container'>
-          <div className='main-wrapper'>
-            <img
-              src={current_track.album.images[0].url}
-              className='now-playing__cover'
-              alt=''
-            />
+      <Stack align='center' spacing='sm'>
+        <Card p='lg' className={classes.card} shadow='lg' radius='lg'>
+          <div
+            className={classes.image}
+            style={{
+              backgroundImage: `url(${current_track.album.images[0].url})`,
+            }}
+          />
+          <div className={classes.overlay} />
 
-            <div className='now-playing__side'>
-              <div className='now-playing__name'>{current_track.name}</div>
-              <div className='now-playing__artist'>
+          <div className={classes.content}>
+            <div>
+              <Text size='lg' className={classes.title} weight={500}>
+                {current_track.name}
+              </Text>
+              <Text size='sm' className={classes.author}>
                 {current_track.artists[0].name}
-              </div>
-
-              <button
-                className='btn-spotify'
-                onClick={() => {
-                  player.previousTrack();
-                }}
-              >
-                &lt;&lt;
-              </button>
-
-              <button
-                className='btn-spotify'
-                onClick={() => {
-                  player.togglePlay();
-                }}
-              >
-                {isPaused ? 'PLAY' : 'PAUSE'}
-              </button>
-
-              <button
-                className='btn-spotify'
-                onClick={() => {
-                  player.nextTrack();
-                }}
-              >
-                &gt;&gt;
-              </button>
+              </Text>
             </div>
           </div>
-        </div>
-      </>
+        </Card>
+        <Group>
+          <IconPlayerTrackPrevFilled
+            size={60}
+            onClick={() => {
+              player.previousTrack();
+            }}
+          />
+          {isPaused ? (
+            <IconPlayerPlay
+              size={80}
+              onClick={() => {
+                player.togglePlay();
+              }}
+            />
+          ) : (
+            <IconPlayerPause
+              size={80}
+              onClick={() => {
+                player.togglePlay();
+              }}
+            />
+          )}
+          <IconPlayerTrackNextFilled
+            size={60}
+            onClick={() => {
+              player.nextTrack();
+            }}
+          />
+        </Group>
+      </Stack>
     );
   }
 }
