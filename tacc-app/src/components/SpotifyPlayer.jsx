@@ -138,7 +138,7 @@ function SpotifyPlayer() {
     );
   } else {
     return (
-      <Card radius='md'>
+      <Card radius='lg'>
         <Stack align='center' spacing='sm'>
           <Card p='lg' className={classes.card} radius='md'>
             <div

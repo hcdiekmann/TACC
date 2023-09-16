@@ -83,7 +83,7 @@ export const WeatherWidget = (): JSX.Element => {
   }, [latitude, longitude]);
 
   return (
-    <Card radius='md'>
+    <Card radius='lg'>
       {isLoading ? (
         <Center>
           <Loader />

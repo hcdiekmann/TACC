@@ -9,7 +9,11 @@ export const HomePage = (): JSX.Element => {
   return (
     <Container p={10}>
       <Title order={1}>{`${greeting}, ${userName}!`}</Title>
-      <SimpleGrid p={10} cols={2}>
+      <SimpleGrid
+        p={10}
+        cols={2}
+        breakpoints={[{ maxWidth: '84rem', cols: 1, spacing: 'sm' }]}
+      >
         <SpotifyPlayer />
         <WeatherWidget />
       </SimpleGrid>
