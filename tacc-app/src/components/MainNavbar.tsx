@@ -120,7 +120,11 @@ export const MainNavbar = (): JSX.Element => {
   ));
 
   return (
-    <Navbar width={{ sm: 200, md: 250 }} p='md' className={classes.navbar}>
+    <Navbar
+      width={{ sm: 200, md: 200, lg: 250 }}
+      p='md'
+      className={classes.navbar}
+    >
       <Navbar.Section grow>
         <Group className={classes.header}>
           <Image src='../pictures/logo.png' alt='Logo' maw={200} />

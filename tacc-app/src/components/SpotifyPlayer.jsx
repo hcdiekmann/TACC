@@ -139,22 +139,21 @@ function SpotifyPlayer() {
 
   if (isOffline) {
     return (
-      <Stack p={10} align='center'>
-        <IconPlugConnectedX size={80} />
-        <Text fw={600}>
-          Spotify not available. Ensure you are logged in and have a Premium
-          subscription.
-        </Text>
-        <Button
-          component='a'
-          href='http://localhost:5000/auth/login'
-          leftIcon={<IconBrandSpotify size={rem(32)} />}
-          variant='gradient'
-          gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
-        >
-          Login
-        </Button>
-      </Stack>
+      <Card radius='lg'>
+        <Stack p={10} align='center'>
+          <IconPlugConnectedX size={48} />
+          <Text fw={600}>Spotify not connected</Text>
+          <Button
+            component='a'
+            href='http://localhost:5000/auth/login'
+            leftIcon={<IconBrandSpotify size={rem(32)} />}
+            variant='gradient'
+            gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
+          >
+            Login
+          </Button>
+        </Stack>
+      </Card>
     );
   }
 
@@ -163,7 +162,9 @@ function SpotifyPlayer() {
       <Card radius='lg'>
         <Stack align='center' spacing='xs'>
           <IconBrandSpotify size={48} color='#00993F' />
-          <Text fw={600}>Use your Spotify App to stream to this device</Text>
+          <Text align='center' fw={600}>
+            Use your Spotify App to stream to this device
+          </Text>
         </Stack>
       </Card>
     );
@@ -234,8 +235,9 @@ function SpotifyPlayer() {
           pr={10}
           pt={15}
           pb={5}
-          thumbSize={26}
-          thumbChildren={<IconVolume size='1rem' />}
+          size={14}
+          thumbSize={34}
+          thumbChildren={<IconVolume size='1.2rem' />}
           styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
           value={volume}
           onChange={async (value) => {

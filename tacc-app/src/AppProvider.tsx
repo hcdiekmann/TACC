@@ -6,6 +6,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { MusicPage } from './pages/MusicPage';
 import { NavigationPage } from './pages/NavigationPage';
 import { SpotifyPlayerProvider } from './context/SpotifyPlayerProvider';
+import { DateTimeWidget } from './components/DateTimeWidget';
 import { useState, useEffect, useContext } from 'react';
 import { LoginPage } from './pages/LoginPage';
 import { getToken, refreshToken } from './auth/TokenManager';
@@ -77,7 +78,7 @@ const PageProvider = (): JSX.Element => {
   }
 
   function renderSidebar() {
-    return <p>Information</p>;
+    return <DateTimeWidget />;
   }
 
   return (

@@ -1,8 +1,8 @@
+// TODO: Convert to typescript context
+// npm install --save-dev @types/spotify-web-playback-sdk
 import { createContext, useContext, useState, useEffect } from 'react';
-// ToDo: npm install --save-dev @types/spotify-web-playback-sdk
-// convert to typescript
-const SpotifyPlayerContext = createContext();
 
+const SpotifyPlayerContext = createContext();
 let spotifyPlayer = null;
 
 function getSpotifyPlayer(token) {
@@ -10,7 +10,7 @@ function getSpotifyPlayer(token) {
   if (spotifyPlayer) return spotifyPlayer;
 
   spotifyPlayer = new window.Spotify.Player({
-    name: 'Toyota App',
+    name: 'TACC App',
     getOAuthToken: (cb) => {
       cb(token);
     },

@@ -6,12 +6,13 @@ import {
   IconSunrise,
   IconSunset,
   IconSunFilled,
+  IconMoonStars,
   IconSunWind,
   IconCloud,
   IconCloudRain,
   IconCloudSnow,
   IconCloudStorm,
-  IconCloudOff,
+  IconCloudCancel,
   IconMapPin,
 } from '@tabler/icons-react';
 
@@ -91,8 +92,8 @@ export const WeatherWidget = (): JSX.Element => {
       ) : error ? (
         <Center>
           <Stack align='center'>
-            <IconCloudOff size={68} />
-            <Text>Weather currently not available</Text>
+            <IconCloudCancel size={48} />
+            <Text fw={600}>Weather currently not available</Text>
           </Stack>
         </Center>
       ) : (
