@@ -1,4 +1,4 @@
-import { Container, Title, SimpleGrid } from '@mantine/core';
+import { Container, Title, Grid } from '@mantine/core';
 import { WeatherWidget } from '../components/WeatherWidget';
 import SpotifyPlayer from '../components/SpotifyPlayer';
 
@@ -8,15 +8,15 @@ export const HomePage = (): JSX.Element => {
 
   return (
     <Container p={10}>
-      <Title order={1}>{`${greeting}, ${userName}!`}</Title>
-      <SimpleGrid
-        p={10}
-        cols={2}
-        breakpoints={[{ maxWidth: '84rem', cols: 1, spacing: 'sm' }]}
-      >
-        <SpotifyPlayer />
-        <WeatherWidget />
-      </SimpleGrid>
+      <Title mb={15} order={1}>{`${greeting}, ${userName}!`}</Title>
+      <Grid>
+        <Grid.Col lg={6}>
+          <SpotifyPlayer />
+        </Grid.Col>
+        <Grid.Col lg={6}>
+          <WeatherWidget />
+        </Grid.Col>
+      </Grid>
     </Container>
   );
 };

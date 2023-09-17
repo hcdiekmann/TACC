@@ -16,7 +16,14 @@ import {
   IconMapPin,
 } from '@tabler/icons-react';
 
-const getWeatherIcon = (weatherDetails: WeatherDetails): React.ReactElement => {
+const getWeatherIcon = (
+  weatherDetails: WeatherDetails,
+  isNightTime: boolean
+): React.ReactElement => {
+  if (weatherDetails.main === 'Clear' && isNightTime) {
+    return <IconMoonStars size={68} />;
+  }
+
   switch (weatherDetails.main) {
     case 'Clear':
       return <IconSunFilled size={68} />;
@@ -31,6 +38,13 @@ const getWeatherIcon = (weatherDetails: WeatherDetails): React.ReactElement => {
     default:
       return <IconSunWind size={68} />;
   }
+};
+
+const isNightTime = (sunrise: number, sunset: number, timezone: number) => {
+  const currentTime =
+    new Date(new Date().getTime() / 1000 + timezone).getHours() * 3600 +
+    new Date(new Date().getTime() / 1000 + timezone).getMinutes() * 60;
+  return currentTime < sunrise || currentTime > sunset;
 };
 
 const convertUnixToTime = (unixTimestamp: number, timezone: number): string => {
@@ -104,7 +118,15 @@ export const WeatherWidget = (): JSX.Element => {
               <Text fw={500}>{weather?.name}</Text>
             </Flex>
             <Flex gap='md'>
-              {weather?.weather[0] && getWeatherIcon(weather.weather[0])}
+              {weather?.weather[0] &&
+                getWeatherIcon(
+                  weather.weather[0],
+                  isNightTime(
+                    weather?.sys.sunrise || 0,
+                    weather?.sys.sunset || 0,
+                    weather?.timezone || 0
+                  )
+                )}
               <Flex direction='column' gap='xs'>
                 <Text fw={600} size={40}>{`${weather?.main.temp.toFixed(
                   1

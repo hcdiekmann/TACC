@@ -38,7 +38,7 @@ export const DateTimeWidget = () => {
   }, []);
 
   return (
-    <Stack>
+    <Stack spacing={0}>
       <Title order={1}>{time}</Title>
       <Title order={3}>{date}</Title>
     </Stack>
