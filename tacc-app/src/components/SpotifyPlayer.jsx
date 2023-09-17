@@ -105,8 +105,15 @@ function SpotifyPlayer() {
       setLoading(true);
       return;
     }
-    setLoading(false);
-    setTrack(playerState.track_window.current_track);
+    if (playerState.context.uri === null) {
+      setLoading(true);
+      return;
+    }
+    setLoading(playerState.loading);
+
+    if (playerState.track_window.current_track) {
+      setTrack(playerState.track_window.current_track);
+    }
     setPaused(playerState.paused);
   }, [player, playerState]);
 
@@ -114,7 +121,10 @@ function SpotifyPlayer() {
     return (
       <Stack p={10} align='center'>
         <IconPlugConnectedX size={80} />
-        <Text fw={600}>Spotify not available. Ensure you are logged in.</Text>
+        <Text fw={600}>
+          Spotify not available. Ensure you are logged in and have a Premium
+          subscription.
+        </Text>
         <Button
           component='a'
           href='http://localhost:5000/auth/login'
@@ -130,35 +140,41 @@ function SpotifyPlayer() {
 
   if (isLoading) {
     return (
-      <Stack align='center'>
-        <Loader size='xl' />
-        <Text fw={600}>Use your Spotify App to stream to this device</Text>
-      </Stack>
+      <Card radius='lg'>
+        <Stack align='center' spacing='xs'>
+          <IconBrandSpotify size={48} color='#00993F' />
+          <Text fw={600}>Use your Spotify App to stream to this device</Text>
+        </Stack>
+      </Card>
     );
   } else {
     return (
       <Card radius='lg'>
         <Stack align='center' spacing='sm'>
-          <Card p='lg' className={classes.card} radius='md'>
-            <div
-              className={classes.image}
-              style={{
-                backgroundImage: `url(${current_track.album.images[0].url})`,
-              }}
-            />
-            <div className={classes.overlay} />
+          {current_track ? (
+            <Card p='lg' className={classes.card} radius='md'>
+              <div
+                className={classes.image}
+                style={{
+                  backgroundImage: `url(${current_track.album.images[0].url})`,
+                }}
+              />
+              <div className={classes.overlay} />
 
-            <div className={classes.content}>
-              <div>
-                <Text size='lg' className={classes.title} weight={500}>
-                  {current_track.name}
-                </Text>
-                <Text size='sm' className={classes.author}>
-                  {current_track.artists[0].name}
-                </Text>
+              <div className={classes.content}>
+                <div>
+                  <Text size='lg' className={classes.title} weight={500}>
+                    {current_track.name}
+                  </Text>
+                  <Text size='sm' className={classes.author}>
+                    {current_track.artists[0].name}
+                  </Text>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          ) : (
+            <div>Not playing</div>
+          )}
           <Group>
             <IconPlayerTrackPrevFilled
               className={classes.icon}

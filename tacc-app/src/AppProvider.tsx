@@ -32,15 +32,14 @@ export const AppProvider = (): JSX.Element => {
             }
           } else {
             console.warn('Could not refresh access token.');
-            // TODO:
-            // maybe navigate user back to login?
+            setToken(null);
           }
         }, timeToRefresh - 5000); // Refresh 5 seconds before token expires to be safe
       }
     }
 
     initializeToken();
-  }, [token]);
+  });
 
   return (
     <>

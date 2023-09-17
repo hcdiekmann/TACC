@@ -33,6 +33,9 @@ export async function getToken(): Promise<string | null> {
 export async function refreshToken(): Promise<string | null> {
   try {
     const refreshToken = sessionStorage.getItem('spotifyRefreshToken');
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
     const response = await fetch(
       `http://localhost:5000/refresh_token?refresh_token=${refreshToken}`
     );
