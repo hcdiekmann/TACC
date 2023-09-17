@@ -110,24 +110,25 @@ export const WeatherWidget = (): JSX.Element => {
                 )} °C`}</Text>
               </Flex>
             </Flex>
-            <Flex gap='xs'>
-              <IconSunrise size={22} />
-              <Text>
-                {convertUnixToTime(
-                  weather?.sys.sunrise || 0,
-                  weather?.timezone || 0
-                )}
-              </Text>
-            </Flex>
-            <Flex gap='xs'>
-              <IconSunset size={22} />
-
-              <Text>
-                {convertUnixToTime(
-                  weather?.sys.sunset || 0,
-                  weather?.timezone || 0
-                )}
-              </Text>
+            <Flex gap='md'>
+              <Flex gap='xs'>
+                <IconSunrise size={22} />
+                <Text>
+                  {convertUnixToTime(
+                    weather?.sys.sunrise || 0,
+                    weather?.timezone || 0
+                  )}
+                </Text>
+              </Flex>
+              <Flex gap='xs'>
+                <IconSunset size={22} />
+                <Text>
+                  {convertUnixToTime(
+                    weather?.sys.sunset || 0,
+                    weather?.timezone || 0
+                  )}
+                </Text>
+              </Flex>
             </Flex>
           </Stack>
         </Center>

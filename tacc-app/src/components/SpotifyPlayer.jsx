@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
 
   overlay: {
     position: 'absolute',
-    top: '40%',
+    top: '60%',
     left: 0,
     right: 0,
     bottom: 0,
@@ -65,9 +65,11 @@ const useStyles = createStyles((theme) => ({
     marginBottom: rem(5),
   },
 
-  bodyText: {
-    color: theme.colors.dark[2],
-    marginLeft: rem(7),
+  icon: {
+    '&:hover': {
+      cursor: 'pointer',
+      color: theme.primaryColor,
+    },
   },
 
   author: {
@@ -110,12 +112,9 @@ function SpotifyPlayer() {
 
   if (isOffline) {
     return (
-      <Stack align='center'>
-        <IconPlugConnectedX size={80} color='red' />
-        <Text fw={600}>
-          Spotify Player not available, ensure you are logged in or try again
-          later
-        </Text>
+      <Stack p={10} align='center'>
+        <IconPlugConnectedX size={80} />
+        <Text fw={600}>Spotify not available. Ensure you are logged in.</Text>
         <Button
           component='a'
           href='http://localhost:5000/auth/login'
@@ -162,6 +161,7 @@ function SpotifyPlayer() {
           </Card>
           <Group>
             <IconPlayerTrackPrevFilled
+              className={classes.icon}
               size={68}
               onClick={() => {
                 player.previousTrack();
@@ -169,6 +169,7 @@ function SpotifyPlayer() {
             />
             {isPaused ? (
               <IconPlayerPlayFilled
+                className={classes.icon}
                 size={82}
                 onClick={() => {
                   player.togglePlay();
@@ -176,6 +177,7 @@ function SpotifyPlayer() {
               />
             ) : (
               <IconPlayerPause
+                className={classes.icon}
                 size={82}
                 onClick={() => {
                   player.togglePlay();
@@ -183,6 +185,7 @@ function SpotifyPlayer() {
               />
             )}
             <IconPlayerTrackNextFilled
+              className={classes.icon}
               size={68}
               onClick={() => {
                 player.nextTrack();
