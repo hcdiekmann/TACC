@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
   Stack,
-  Loader,
   Text,
   Card,
   Group,
@@ -9,6 +8,7 @@ import {
   getStylesRef,
   rem,
   Button,
+  Slider,
 } from '@mantine/core';
 import {
   IconPlayerTrackPrevFilled,
@@ -17,6 +17,7 @@ import {
   IconPlayerPause,
   IconBrandSpotify,
   IconPlugConnectedX,
+  IconVolume,
 } from '@tabler/icons-react';
 import { useSpotifyPlayer } from '../context/SpotifyPlayerProvider';
 
@@ -91,7 +92,26 @@ function SpotifyPlayer() {
   const [isOffline, setOffline] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isPaused, setPaused] = useState(false);
+  const [volume, setVolume] = useState(0.5);
   const [current_track, setTrack] = useState(track);
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      if (player) {
+        try {
+          const currentVolume = await player.getVolume();
+          const normalizedVolume = (currentVolume * 100).toFixed(0);
+          if (volume !== normalizedVolume) {
+            setVolume(normalizedVolume);
+          }
+        } catch (e) {
+          console.error('Failed to get volume:', e);
+        }
+      }
+    }, 1000); // poll volume every 1 second, no event!? :/
+
+    return () => clearInterval(intervalId);
+  }, [player, volume]);
 
   useEffect(() => {
     if (!player) {
@@ -115,7 +135,7 @@ function SpotifyPlayer() {
       setTrack(playerState.track_window.current_track);
     }
     setPaused(playerState.paused);
-  }, [player, playerState]);
+  }, [player, playerState, volume]);
 
   if (isOffline) {
     return (
@@ -209,6 +229,24 @@ function SpotifyPlayer() {
             />
           </Group>
         </Stack>
+        <Slider
+          pl={10}
+          pr={10}
+          pt={15}
+          pb={5}
+          thumbSize={26}
+          thumbChildren={<IconVolume size='1rem' />}
+          styles={{ thumb: { borderWidth: rem(2), padding: rem(3) } }}
+          value={volume}
+          onChange={async (value) => {
+            try {
+              await player.setVolume(value / 100);
+              setVolume(value);
+            } catch (e) {
+              console.error('Failed to set volume:', e);
+            }
+          }}
+        />
       </Card>
     );
   }

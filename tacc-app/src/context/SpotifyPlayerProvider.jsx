@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-
+// ToDo: npm install --save-dev @types/spotify-web-playback-sdk
+// convert to typescript
 const SpotifyPlayerContext = createContext();
 
 let spotifyPlayer = null;
