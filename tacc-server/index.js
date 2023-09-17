@@ -5,7 +5,10 @@ const request = require('request');
 const dotenv = require('dotenv');
 
 const port = 5000;
-global.access_token = '';
+// TODO: use cache or session storage
+global._access_token = '';
+global._refresh_token = '';
+global._expires_in = '';
 
 dotenv.config();
 var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
@@ -35,7 +38,10 @@ app.get('/auth/login', (req, res) => {
 });
 
 app.get('/auth/callback', (req, res) => {
-  var code = req.query.code;
+  var code = req.query.code || null;
+  if (!code) {
+    return res.status(400).json({ error: 'Missing code parameter.' });
+  }
 
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
@@ -57,14 +63,21 @@ app.get('/auth/callback', (req, res) => {
 
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      access_token = body.access_token;
+      _access_token = body.access_token;
+      _expires_in = body.expires_in;
+      _refresh_token = body.refresh_token;
       res.redirect('http://localhost:3000/');
     }
   });
 });
 
 app.get('/refresh_token', function (req, res) {
-  var refresh_token = req.query.refresh_token;
+  var refresh_token = req.query.refresh_token || null;
+
+  if (!refresh_token) {
+    return res.status(400).json({ error: 'Missing refresh_token parameter.' });
+  }
+
   var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
@@ -82,18 +95,28 @@ app.get('/refresh_token', function (req, res) {
   };
 
   request.post(authOptions, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      access_token = body.access_token;
-      res.send({
-        access_token: access_token,
-      });
+    if (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
+
+    if (response.statusCode !== 200) {
+      return res.status(response.statusCode).json(body);
+    }
+    _access_token = body.access_token;
+    _expires_in = body.expires_in;
+
+    res.json({
+      access_token: _access_token,
+      expires_in: _expires_in,
+    });
   });
 });
 
 app.get('/auth/token', (req, res) => {
   res.json({
-    access_token: access_token,
+    access_token: _access_token,
+    refresh_token: _refresh_token,
+    expires_in: _expires_in,
   });
 });
 

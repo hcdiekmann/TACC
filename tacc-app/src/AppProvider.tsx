@@ -12,32 +12,35 @@ import { getToken, refreshToken } from './auth/TokenManager';
 
 export const AppProvider = (): JSX.Element => {
   const [token, setToken] = useState<string | null>(null);
-  const [refreshTokenValue] = useState<string | null>(null);
-  const refreshInterval = 3500 * 1000; // Refresh every 3500 seconds (a little less than 1 hour to be safe)
 
   useEffect(() => {
     async function initializeToken() {
       const fetchedToken = await getToken();
       if (fetchedToken) {
         setToken(fetchedToken);
+
+        const expiration = sessionStorage.getItem('spotifyTokenExpiration');
+        const timeToRefresh = expiration
+          ? Number(expiration) - new Date().getTime()
+          : 0;
+
         setTimeout(async () => {
-          if (refreshTokenValue !== null) {
-            const newToken = await refreshToken(refreshTokenValue);
+          if (token !== null) {
+            const newToken = await refreshToken();
             if (newToken) {
               setToken(newToken);
             }
           } else {
-            console.warn(
-              'Refresh token is null. Could not refresh access token.'
-            );
-            // Handle this case accordingly, maybe navigate user back to login?
+            console.warn('Could not refresh access token.');
+            // TODO:
+            // maybe navigate user back to login?
           }
-        }, refreshInterval);
+        }, timeToRefresh - 5000); // Refresh 5 seconds before token expires to be safe
       }
     }
 
     initializeToken();
-  }, [refreshTokenValue, refreshInterval]);
+  }, [token]);
 
   return (
     <>
