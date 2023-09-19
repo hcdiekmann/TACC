@@ -15,7 +15,7 @@ import {
   IconMusic,
   IconMap2,
 } from '@tabler/icons-react';
-import { DataContext } from '../context/DataProvider';
+import { DataContext } from '../context/DataContext';
 import { ColorSchemeBtn } from './ColorSchemeBtn';
 
 const useStyles = createStyles((theme) => ({

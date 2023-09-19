@@ -1,10 +1,12 @@
 import { Container, Title, Grid } from '@mantine/core';
 import { WeatherWidget } from '../components/WeatherWidget';
 import SpotifyPlayer from '../components/SpotifyPlayer';
+import { useAuth } from '../context/AuthContext';
 
 export const HomePage = (): JSX.Element => {
+  const { profile } = useAuth();
   const greeting = getGreeting();
-  const userName = 'Christian';
+  const userName = profile?.display_name?.split(' ')[0];
 
   return (
     <Container p={10}>

@@ -1,4 +1,4 @@
-import { DataContext, DataProvider } from './context/DataProvider';
+import { DataContext, DataProvider } from './context/DataContext';
 import { MainAppShell } from './components/MainAppShell';
 import { HomePage } from './pages/HomePage';
 import { AccountPage } from './pages/AccountPage';
@@ -7,40 +7,12 @@ import { MusicPage } from './pages/MusicPage';
 import { NavigationPage } from './pages/NavigationPage';
 import { SpotifyPlayerProvider } from './context/SpotifyPlayerProvider';
 import { DateTimeWidget } from './components/DateTimeWidget';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { LoginPage } from './pages/LoginPage';
-import { getToken, refreshToken } from './auth/TokenManager';
+import { useAuth } from './context/AuthContext';
 
 export const AppProvider = (): JSX.Element => {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function initializeToken() {
-      const fetchedToken = await getToken();
-      if (fetchedToken) {
-        setToken(fetchedToken);
-
-        const expiration = sessionStorage.getItem('spotifyTokenExpiration');
-        const timeToRefresh = expiration
-          ? Number(expiration) - new Date().getTime()
-          : 0;
-
-        setTimeout(async () => {
-          if (token !== null) {
-            const newToken = await refreshToken();
-            if (newToken) {
-              setToken(newToken);
-            }
-          } else {
-            console.warn('Could not refresh access token.');
-            setToken(null);
-          }
-        }, timeToRefresh - 5000); // Refresh 5 seconds before token expires to be safe
-      }
-    }
-
-    initializeToken();
-  });
+  const { token } = useAuth();
 
   return (
     <>

@@ -1,5 +1,15 @@
 import { createContext } from 'react';
-import { useDataState } from './useDataState';
+import { useState } from 'react';
+
+type State = {
+  loading: true;
+  page?: string;
+};
+
+type LoadedState = {
+  loading: false;
+  page: string;
+};
 
 interface Props {
   children: JSX.Element;
@@ -15,6 +25,22 @@ const defaultContext: Context = {
   page: '',
   setPage: () => {},
 };
+
+function useDataState() {
+  const [state, setState] = useState<State | LoadedState>({ loading: true });
+
+  const setPage = (page: string) => {
+    setState(() => ({
+      page: page,
+      loading: false,
+    }));
+  };
+
+  return {
+    state,
+    setPage,
+  };
+}
 
 export const DataContext = createContext<Context>(defaultContext);
 

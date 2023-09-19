@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocalStorage, useHotkeys } from '@mantine/hooks';
 import { AppProvider } from './AppProvider';
+import { AuthPage } from './pages/AuthPage';
+import { AuthProvider } from './context/AuthContext';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -59,12 +61,15 @@ export const App = (): JSX.Element => {
         withNormalizeCSS
       >
         <Notifications position='top-center' />
-        <Router>
-          <ScrollToTop />
-          <Routes>
-            <Route path='/' element={<AppProvider />} />
-          </Routes>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <ScrollToTop />
+            <Routes>
+              <Route path='/' element={<AppProvider />} />
+              <Route path='/callback' element={<AuthPage />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

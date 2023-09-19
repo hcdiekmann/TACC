@@ -1,5 +1,8 @@
 import { Button, Container, Group, Paper, Title, rem } from '@mantine/core';
 import { IconBrandSpotify } from '@tabler/icons-react';
+import { redirectToAuthCodeFlow } from '../auth/AuthService';
+
+const clientId = process.env.REACT_APP_AUTH_CLIENT_ID as string;
 
 export const LoginPage = () => {
   return (
@@ -16,8 +19,7 @@ export const LoginPage = () => {
       <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
         <Group grow mb='md' mt='md'>
           <Button
-            component='a'
-            href='http://localhost:5000/auth/login'
+            onClick={() => redirectToAuthCodeFlow(clientId)}
             leftIcon={<IconBrandSpotify size={rem(32)} />}
             variant='gradient'
             gradient={{ from: '#00993F', to: '#1ED760', deg: 105 }}
