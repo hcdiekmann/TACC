@@ -30,7 +30,7 @@ export const AuthPage = (): JSX.Element => {
   });
 
   return (
-    <Center mt={50}>
+    <Center mt={100}>
       <Loader variant='bars' color='green' />
     </Center>
   );

@@ -17,6 +17,7 @@ import {
 } from '@tabler/icons-react';
 import { DataContext } from '../context/DataContext';
 import { ColorSchemeBtn } from './ColorSchemeBtn';
+import { useAuth } from '../context/AuthContext';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -100,6 +101,7 @@ export const MainNavbar = (): JSX.Element => {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Home');
   const { setPage } = useContext(DataContext);
+  const { setToken } = useAuth();
 
   const links = data.map((item) => (
     <a
@@ -133,11 +135,7 @@ export const MainNavbar = (): JSX.Element => {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a
-          href={'/'}
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
+        <a href={'/'} className={classes.link} onClick={() => setToken(null)}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </a>

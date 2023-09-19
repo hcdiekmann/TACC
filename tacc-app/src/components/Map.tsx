@@ -50,7 +50,7 @@ export const Map = (): JSX.Element => {
         center={[position.lat, position.lng]}
         zoom={13}
         scrollWheelZoom={false}
-        style={{ height: '600px', width: '100%' }}
+        style={{ height: '85vh', width: '100%' }}
       >
         <LayersControl>
           <BaseLayer checked name='Street Map'>
