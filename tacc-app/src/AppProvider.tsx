@@ -13,10 +13,11 @@ import { useAuth } from './context/AuthContext';
 
 export const AppProvider = (): JSX.Element => {
   const { token } = useAuth();
+  const auth_enabled = process.env.REACT_APP_ENABLED_AUTH;
 
   return (
     <>
-      {!token ? (
+      {!token && auth_enabled === 'true' ? (
         <LoginPage />
       ) : (
         <SpotifyPlayerProvider token={token}>
